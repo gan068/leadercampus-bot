@@ -74,7 +74,6 @@ class LineController extends Controller
             new MessageTemplateActionBuilder("我的課程", "我的課程"),
             new MessageTemplateActionBuilder("我的能力", "我的能力"),
             new MessageTemplateActionBuilder("推薦", "推薦"),
-            new MessageTemplateActionBuilder("使用說明", "help"),
         ];
         $img_url = null;
         //   $img_url = "圖片網址，必需為 https (圖片非必填欄位)";
