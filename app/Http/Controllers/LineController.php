@@ -17,12 +17,6 @@ use LINE\LINEBot\MessageBuilder\Imagemap\BaseSizeBuilder;
 
 class LineController extends Controller
 {
-    public function imageMap()
-    {
-        $type = 'image/jpeg';
-        return response(file_get_contents('https://api.reh.tw/line/bot/example/assets/images/example/1040/'))
-            ->header('Content-Type', $type);
-    }
     public function index(Request $request)
     {
         $httpClient = new CurlHTTPClient(env('LINE_ACCESS_TOKEN'));
@@ -66,7 +60,7 @@ class LineController extends Controller
             
             $image_map_actions =[];
             $image_map_actions[] = new ImagemapMessageActionBuilder('看有何課程', $area);
-            $image_map = new ImagemapMessageBuilder('https://storage.googleapis.com/dev-cdn.leadercampus.com.tw/line-botwelcome', '歡迎進入創新學院', $base_size, $image_map_actions);
+            $image_map = new ImagemapMessageBuilder('https://storage.googleapis.com/dev-cdn.leadercampus.com.tw/line-bot/welcome', '歡迎進入創新學院', $base_size, $image_map_actions);
             $bot->replyMessage($reply_token, $image_map);
             return 'ok';
             //
