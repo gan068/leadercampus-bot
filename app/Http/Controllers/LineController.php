@@ -10,16 +10,45 @@ use LINE\LINEBot\ImagemapActionBuilder\ImagemapMessageActionBuilder;
 use LINE\LINEBot\MessageBuilder\ImagemapMessageBuilder;
 use LINE\LINEBot\MessageBuilder\Imagemap\BaseSizeBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
 use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 
 class LineController extends Controller
 {
     protected $bot;
+
     public function __construct()
     {
         $httpClient = new CurlHTTPClient(env('LINE_ACCESS_TOKEN'));
         $this->bot = new LINEBot($httpClient, ['channelSecret' => env('LINE_BOT_CHANNEL_SECRET')]);
+    }
+
+    protected function recommends(string $reply_token): void
+    {
+        $columns = [];
+
+        $actions = [];
+        $actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=1');
+        $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/channel/201902/channel-5c6a55246f23c.jpg';
+        $columns[] = new CarouselColumnTemplateBuilder('', '數位轉型關鍵對談', $image, $actions);
+
+        $actions = [];
+        $actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=2');
+        $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/article/201903/course-5c9c73495ccda.jpg';
+        $columns[] = new CarouselColumnTemplateBuilder('', '學會學：學習之道', $image, $actions);
+
+        $actions = [];
+        $actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=3');
+        $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/article/201901/course-5c3489c4ddcd5.jpg';
+        $columns[] = new CarouselColumnTemplateBuilder('', '數位轉型從領導力開始', $image, $actions);
+
+        $carousel = new CarouselTemplateBuilder($columns);
+        $msg = new TemplateMessageBuilder('這訊息要用手機才看的到哦', $carousel);
+
+        $this->bot->replyMessage($reply_token, $msg);
     }
     protected function welcome(string $reply_token): void
     {
@@ -68,6 +97,9 @@ class LineController extends Controller
             switch ($text) {
                 case '我的課程':
                     $this->myCourses($reply_token);
+                    break;
+                case '推薦':
+                    $this->recommends($reply_token);
                     break;
                 default:
                     $this->welcome($reply_token);
