@@ -14,7 +14,6 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
 use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
-use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 
 class LineController extends Controller
@@ -54,6 +53,7 @@ class LineController extends Controller
 
         $this->bot->replyMessage($reply_token, $msg);
     }
+
     protected function welcome(string $reply_token): void
     {
         $base_size = new BaseSizeBuilder(1040, 1040);
@@ -61,10 +61,27 @@ class LineController extends Controller
         $area = new AreaBuilder(407, 518, 611, 244);
 
         $image_map_actions = [];
-        $image_map_actions[] = new ImagemapMessageActionBuilder('看有何課程', $area);
+        $image_map_actions[] = new ImagemapMessageActionBuilder('help', $area);
         $image_map = new ImagemapMessageBuilder('https://storage.googleapis.com/dev-cdn.leadercampus.com.tw/line-bot/welcome', '歡迎進入創新學院', $base_size, $image_map_actions);
         $this->bot->replyMessage($reply_token, $image_map);
     }
+
+    protected function help(string $reply_token)
+    {
+        $actions = [
+            //一般訊息型 action
+            new MessageTemplateActionBuilder("歡迎", "welcome"),
+            new MessageTemplateActionBuilder("我的課程", "我的課程"),
+            new MessageTemplateActionBuilder("推薦", "推薦"),
+            new MessageTemplateActionBuilder("使用說明", "help"),
+        ];
+        $img_url = null;
+        //   $img_url = "圖片網址，必需為 https (圖片非必填欄位)";
+        $buttons = new ButtonTemplateBuilder("沃客功能", "這裡會列出沃客的功能", $img_url, $actions);
+        $msg = new TemplateMessageBuilder("這訊息要用手機才看的到哦", $buttons);
+        $this->bot->replyMessage($reply_token, $msg);
+    }
+
     protected function myCourses(string $reply_token)
     {
         $actions = [
@@ -105,8 +122,11 @@ class LineController extends Controller
                 case '推薦':
                     $this->recommends($reply_token);
                     break;
-                default:
+                case 'welcome':
                     $this->welcome($reply_token);
+                    break;
+                default:
+                    $this->help($reply_token);
                     break;
             }
         });
