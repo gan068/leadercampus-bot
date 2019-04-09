@@ -31,17 +31,20 @@ class LineController extends Controller
         $columns = [];
 
         $actions = [];
-        $actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=1');
+        //$actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=1');
+        $actions[] = new MessageTemplateActionBuilder("查看詳情", "查看詳情1");
         $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/channel/201902/channel-5c6a55246f23c.jpg';
         $columns[] = new CarouselColumnTemplateBuilder('', '數位轉型關鍵對談', $image, $actions);
 
         $actions = [];
-        $actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=2');
+        //$actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=2');
+        $actions[] = new MessageTemplateActionBuilder("查看詳情", "查看詳情2");
         $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/article/201903/course-5c9c73495ccda.jpg';
         $columns[] = new CarouselColumnTemplateBuilder('', '學會學：學習之道', $image, $actions);
 
         $actions = [];
-        $actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=3');
+        //$actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=3');
+        $actions[] = new MessageTemplateActionBuilder("查看詳情", "查看詳情3");
         $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/article/201901/course-5c3489c4ddcd5.jpg';
         $columns[] = new CarouselColumnTemplateBuilder('', '數位轉型從領導力開始', $image, $actions);
 
@@ -63,7 +66,7 @@ class LineController extends Controller
     }
     protected function myCourses(string $reply_token)
     {
-        $actions = array(
+        $actions = [
             //一般訊息型 action
             new MessageTemplateActionBuilder("所有已購買課程", "所有已購買課程"),
             new MessageTemplateActionBuilder("未學習完成的課程", "未學習完成的課程"),
@@ -74,7 +77,7 @@ class LineController extends Controller
             //下列兩筆均為互動型action
             // new PostbackTemplateActionBuilder("下一頁", "page=3"),
             // new PostbackTemplateActionBuilder("上一頁", "page=1")
-        );
+        ];
         $img_url = null;
         //   $img_url = "圖片網址，必需為 https (圖片非必填欄位)";
         $button = new ButtonTemplateBuilder("我的課程", "這裡會列出您已購買課程的項目", $img_url, $actions);
