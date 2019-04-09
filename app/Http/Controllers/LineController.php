@@ -59,7 +59,7 @@ class LineController extends Controller
         $input = $request->all();
         $events = collect($input['events']);
 
-        $events->each(function ($event) use ($bot) {
+        $events->each(function ($event) {
             $response = [
 
             ];
