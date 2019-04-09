@@ -112,8 +112,10 @@ class LineController extends Controller
         $columns[] = new CarouselColumnTemplateBuilder('1', '數位轉型關鍵對談', $image, $actions);
         $carousel = new CarouselTemplateBuilder($columns);
         $msg = new TemplateMessageBuilder('這訊息要用手機才看的到哦', $carousel);
-        
+
+        $this->bot->replyMessage($reply_token, $msg);
     }
+
     protected function unfinishedCourses(string $reply_token)
     {
         $columns = [];
@@ -133,7 +135,7 @@ class LineController extends Controller
         $actions = [];
         $actions[] = new UriTemplateActionBuilder("所有已購買課程", "http://www.leadercampus.com.tw");
         $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/article/201901/course-5c3489c4ddcd5.jpg';
-        $columns[] = new CarouselColumnTemplateBuilder('3', '數位轉型從領導力開始', $image, $actions);
+        $columns[] = new CarouselColumnTemplateBuilder('1', '數位轉型從領導力開始', $image, $actions);
         $carousel = new CarouselTemplateBuilder($columns);
         $msg = new TemplateMessageBuilder('這訊息要用手機才看的到哦', $carousel);
 
