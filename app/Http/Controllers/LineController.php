@@ -34,19 +34,19 @@ class LineController extends Controller
         //$actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=1');
         $actions[] = new MessageTemplateActionBuilder("查看詳情", "查看詳情1");
         $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/channel/201902/channel-5c6a55246f23c.jpg';
-        $columns[] = new CarouselColumnTemplateBuilder('', '數位轉型關鍵對談', $image, $actions);
+        $columns[] = new CarouselColumnTemplateBuilder('1', '數位轉型關鍵對談', $image, $actions);
 
         $actions = [];
         //$actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=2');
         $actions[] = new MessageTemplateActionBuilder("查看詳情", "查看詳情2");
         $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/article/201903/course-5c9c73495ccda.jpg';
-        $columns[] = new CarouselColumnTemplateBuilder('', '學會學：學習之道', $image, $actions);
+        $columns[] = new CarouselColumnTemplateBuilder('2', '學會學：學習之道', $image, $actions);
 
         $actions = [];
         //$actions[] = new PostbackTemplateActionBuilder('查看詳情', 'course_id=3');
         $actions[] = new MessageTemplateActionBuilder("查看詳情", "查看詳情3");
         $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/article/201901/course-5c3489c4ddcd5.jpg';
-        $columns[] = new CarouselColumnTemplateBuilder('', '數位轉型從領導力開始', $image, $actions);
+        $columns[] = new CarouselColumnTemplateBuilder('3', '數位轉型從領導力開始', $image, $actions);
 
         $carousel = new CarouselTemplateBuilder($columns);
         $msg = new TemplateMessageBuilder('這訊息要用手機才看的到哦', $carousel);
