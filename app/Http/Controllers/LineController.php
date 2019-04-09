@@ -102,6 +102,44 @@ class LineController extends Controller
         $msg = new TemplateMessageBuilder("這訊息要用手機才看的到哦", $button);
         $this->bot->replyMessage($reply_token, $msg);
     }
+
+    protected function finishedCourses(string $reply_token)
+    {
+        $columns = [];
+        $actions = [];
+        $actions[] = new UriTemplateActionBuilder("已學習完成的課程", "http://www.leadercampus.com.tw");
+        $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/channel/201902/channel-5c6a55246f23c.jpg';
+        $columns[] = new CarouselColumnTemplateBuilder('1', '數位轉型關鍵對談', $image, $actions);
+        $carousel = new CarouselTemplateBuilder($columns);
+        $msg = new TemplateMessageBuilder('這訊息要用手機才看的到哦', $carousel);
+        
+    }
+    protected function unfinishedCourses(string $reply_token)
+    {
+        $columns = [];
+        $actions = [];
+        $actions[] = new UriTemplateActionBuilder("未學習完成的課程", "http://www.leadercampus.com.tw");
+        $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/article/201903/course-5c9c73495ccda.jpg';
+        $columns[] = new CarouselColumnTemplateBuilder('1', '學會學：學習之道', $image, $actions);
+        $carousel = new CarouselTemplateBuilder($columns);
+        $msg = new TemplateMessageBuilder('這訊息要用手機才看的到哦', $carousel);
+
+        $this->bot->replyMessage($reply_token, $msg);
+    }
+
+    protected function recentlyPurchasedCourses(string $reply_token)
+    {
+        $columns = [];
+        $actions = [];
+        $actions[] = new UriTemplateActionBuilder("所有已購買課程", "http://www.leadercampus.com.tw");
+        $image = 'https://storage.googleapis.com/www-leadercampus-com-tw/leader/images/article/201901/course-5c3489c4ddcd5.jpg';
+        $columns[] = new CarouselColumnTemplateBuilder('3', '數位轉型從領導力開始', $image, $actions);
+        $carousel = new CarouselTemplateBuilder($columns);
+        $msg = new TemplateMessageBuilder('這訊息要用手機才看的到哦', $carousel);
+
+        $this->bot->replyMessage($reply_token, $msg);
+    }
+
     public function index(Request $request)
     {
 
@@ -124,6 +162,15 @@ class LineController extends Controller
                     break;
                 case 'welcome':
                     $this->welcome($reply_token);
+                    break;
+                case '所有已購買課程':
+                    $this->recentlyPurchasedCourses($reply_token);
+                    break;
+                case '未學習完成的課程':
+                    $this->unfinishedCourses($reply_token);
+                    break;
+                case '已學習完成的課程':
+                    $this->finishedCourses($reply_token);
                     break;
                 default:
                     $this->help($reply_token);
