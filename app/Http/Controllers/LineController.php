@@ -72,12 +72,13 @@ class LineController extends Controller
             //一般訊息型 action
             new MessageTemplateActionBuilder("歡迎", "welcome"),
             new MessageTemplateActionBuilder("我的課程", "我的課程"),
+            new MessageTemplateActionBuilder("我的能力", "我的能力"),
             new MessageTemplateActionBuilder("推薦", "推薦"),
             new MessageTemplateActionBuilder("使用說明", "help"),
         ];
         $img_url = null;
         //   $img_url = "圖片網址，必需為 https (圖片非必填欄位)";
-        $buttons = new ButtonTemplateBuilder("沃客功能", "這裡會列出沃客的功能", $img_url, $actions);
+        $buttons = new ButtonTemplateBuilder("沃課功能", "這裡會列出沃課的功能", $img_url, $actions);
         $msg = new TemplateMessageBuilder("這訊息要用手機才看的到哦", $buttons);
         $this->bot->replyMessage($reply_token, $msg);
     }
@@ -129,6 +130,18 @@ class LineController extends Controller
         $this->bot->replyMessage($reply_token, $msg);
     }
 
+    protected function myAbility(string $reply_token)
+    {
+        $actions = [
+            //一般訊息型 action
+            new MessageTemplateActionBuilder("專屬推薦", "推薦"),
+        ];
+        $img_url = 'https://storage.googleapis.com/dev-cdn.leadercampus.com.tw/line-bot/ability.png';
+        //   $img_url = "圖片網址，必需為 https (圖片非必填欄位)";
+        $button = new ButtonTemplateBuilder("我的能力分布", "這是您的能力分布圖", $img_url, $actions);
+        $msg = new TemplateMessageBuilder("這訊息要用手機才看的到哦", $button);
+        $this->bot->replyMessage($reply_token, $msg);
+    }
     protected function recentlyPurchasedCourses(string $reply_token)
     {
         $columns = [];
@@ -173,6 +186,9 @@ class LineController extends Controller
                     break;
                 case '已學習完成的課程':
                     $this->finishedCourses($reply_token);
+                    break;
+                case '我的能力':
+                    $this->myAbility($reply_token);
                     break;
                 default:
                     $this->help($reply_token);
