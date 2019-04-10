@@ -62,7 +62,7 @@ class LineController extends Controller
 
         $image_map_actions = [];
         $image_map_actions[] = new ImagemapMessageActionBuilder('help', $area);
-        $image_map = new ImagemapMessageBuilder('https://storage.googleapis.com/dev-cdn.leadercampus.com.tw/line-bot/welcome', '歡迎進入創新學院', $base_size, $image_map_actions);
+        $image_map = new ImagemapMessageBuilder('https://storage.googleapis.com/dev-cdn.leadercampus.com.tw/line-bot/welcome/v1.0', '歡迎進入創新學院', $base_size, $image_map_actions);
         $this->bot->replyMessage($reply_token, $image_map);
     }
 
